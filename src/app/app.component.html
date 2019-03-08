@@ -1,0 +1,52 @@
+<nav class="navbar navbar-light bg-white justify-content-center">
+  <a target="_blank" href="https://www.linkedin.com/in/jjcosare/" class="navbar-brand">{{title}}</a>
+</nav>
+<div class="container-fluid gedf-wrapper">
+  <div class="row">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-6 gedf-main" id="infinite-scroller" infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="10" (scrolled)="onScroll()" [scrollWindow]="true">
+      <div class="card gedf-card" *ngFor="let observation of observationList">
+        <div ngbTooltip="New observation added!" triggers="manual" #tooltip="ngbTooltip">
+          <div *ngIf="!showScroll && isObservationNew(tooltip, observation)"></div>
+        </div>
+        <div class="card-header">
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="mr-2">
+                <a target="_blank" href="https://www.linkedin.com/in/jjcosare/" title="Jessie James Cosare">
+                  <img class="rounded-circle" width="45" src="assets/jjcosare.jpeg" alt="Jessie James Cosare">
+                </a>
+              </div>
+              <div class="ml-2">
+                <div class="h5 m-0">{{observation.patientDto.name}}</div>
+                <div class="h7 text-muted">{{observation.patientDto.identifier}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i> {{observation.effectiveAt | amTimeAgo}}</div>
+          <a class="card-link" href="#">
+            <h5 class="card-title">{{observation.category}}</h5>
+          </a>
+          <p class="card-text">
+            {{observation.value}}
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <button type="button" class="scroll-to-top"
+              [ngClass]="{'show-scroll': showScroll}" (click)="scrollToTop()">
+        <div>
+          <i class="fa fa-chevron-up"></i>
+        </div>
+        <div *ngIf="newObservationCount > 0" ngbTooltip="New observation added!" [closeDelay]="3000">
+          <span class="badge badge-light">{{newObservationCount}}</span>
+          <span class="sr-only">New observations</span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
